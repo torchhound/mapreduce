@@ -1,7 +1,7 @@
 defmodule MapReduce do
-  require Formatter
-  require Mapper
-  require Reducer
+  use InputReader
+  use Partition
+  use OutputWriter
 
   def main(args) do
     args |> parse_args |> pipeline
@@ -12,7 +12,9 @@ defmodule MapReduce do
   end
 
   def pipeline(options) do
-    Formatter.format("#{options[:file]}")
+    partition = Partition.start()
+    output = OutputWriter.start()
+    InputReader.reader("#{options[:file]}", partition)
   end
 
   defp parse_args(args) do
