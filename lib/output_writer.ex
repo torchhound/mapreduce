@@ -1,5 +1,4 @@
 defmodule OutputWriter do
-  
   def start do
     Task.start(fn -> loop() end)
   end
