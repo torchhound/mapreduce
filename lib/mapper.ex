@@ -1,5 +1,6 @@
 defmodule Mapper do
   def map(line, partition) do
-    Enum.map(String.split(line, " "), fn key -> send partition, key end)
+    send(partition, {:process_put, self()})
+    Enum.map(String.split(line, " "), fn key -> send(partition, {:value_put, key}) end)
   end
 end

@@ -7,14 +7,14 @@ defmodule MapReduce do
     args |> parse_args |> pipeline
   end
 
-  def pipeline([]) do
+  defp pipeline([]) do
     IO.puts "No file given"
   end
 
-  def pipeline(options) do
-    partition = elem(Partition.start(), 1)
+  defp pipeline(options) do
+    partition = elem(Partition.start_link, 1)
+    OutputWriter.start_link
     InputReader.reader("#{options[:file]}", partition)
-    OutputWriter.start()
   end
 
   defp parse_args(args) do
