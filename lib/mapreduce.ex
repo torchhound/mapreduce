@@ -13,8 +13,8 @@ defmodule MapReduce do
 
   def pipeline(options) do
     partition = Partition.start()
-    output = OutputWriter.start()
     InputReader.reader("#{options[:file]}", partition)
+    OutputWriter.start()
   end
 
   defp parse_args(args) do

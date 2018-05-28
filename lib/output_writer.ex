@@ -1,3 +1,10 @@
 defmodule OutputWriter do
-  #read from standard out to file
+  
+  def start do
+    Task.start(fn -> loop() end)
+  end
+
+  defp loop() do
+    IO.stream(:stdio, :line) |> Enum.into(File.stream!(Path.join("test", "output.txt")))
+  end
 end
