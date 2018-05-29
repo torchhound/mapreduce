@@ -1,11 +1,11 @@
 defmodule OutputWriter do
-  def start_link do
-    Task.start_link(fn -> loop() end)
+  def start do
+    Task.start(fn -> loop() end)
   end
 
-  defp loop() do
-    IO.puts "output loop"
+  defp loop do
     IO.stream(:stdio, :line) |> Enum.into(File.stream!(Path.join("test", "output.txt")))
-    loop()
+    loop() 
+    #Process.exit(self(), :kill)
   end
 end

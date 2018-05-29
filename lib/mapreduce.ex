@@ -12,9 +12,15 @@ defmodule MapReduce do
   end
 
   defp pipeline(options) do
-    partition = elem(Partition.start_link, 1)
-    OutputWriter.start_link
+    partition = elem(Partition.start, 1)
+    OutputWriter.start
     InputReader.reader("#{options[:file]}", partition)
+    forever()
+  end
+
+  defp forever do
+    forever()
+    #monitor Partition and OutputWriter and terminate
   end
 
   defp parse_args(args) do
