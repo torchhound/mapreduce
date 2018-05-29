@@ -19,7 +19,7 @@ defmodule Partition do
     check = Enum.filter(processes, fn process -> Process.alive?(process) == true end)
     uniques = Map.keys(values)
     if (length(check) == 0 && length(uniques) != 0), do: (
-      Enum.map(uniques, fn unique -> spawn(fn -> Reducer.reduce([Enum.reduce(values, fn value -> value == unique end) | []]) end) end)
+      Enum.map(uniques, fn unique -> spawn(fn -> Reducer.reduce(Enum.filter(values, fn value -> elem(value, 0) == unique end)) end) end)
       #Process.exit(self(), :kill)
     )
   end
