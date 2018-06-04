@@ -24,4 +24,4 @@ mapreduce-*.tar
 
 mapreduce
 .*.exs
-log.txt
+test/
