@@ -13,7 +13,7 @@ defmodule Terminate do
 
   defp reducer_check(processes) do
     check = Enum.filter(processes, fn process -> Process.alive?(process) == true end)
-    if length(check) == 0, do: (
+    if (length(check) == 0 && length(processes) != 0), do: (
       Process.exit(self(), :kill)
     )
   end
