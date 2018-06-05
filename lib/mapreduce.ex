@@ -13,7 +13,6 @@ defmodule MapReduce do
 
   defp pipeline(options) do
     partition = elem(Partition.start_link, 1)
-    OutputWriter.start
     InputReader.reader("#{options[:file]}", partition)
     forever()
   end
