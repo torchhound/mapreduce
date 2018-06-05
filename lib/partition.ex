@@ -7,12 +7,16 @@ defmodule Partition do
   end
 
   defp loop(processes, values) do
-    mapper_check(processes, Keyword.delete(Keyword.delete(values, String.to_atom(~s(\s))), String.to_atom("")))
+    mailbox_length = elem(Process.info(self(), :message_queue_len), 1)
+    if (mailbox_length == 0), do: (
+      mapper_check(processes, Keyword.delete(Keyword.delete(values, String.to_atom(~s(\s))), String.to_atom("")))
+    )
     receive do
       {:process_put, caller} ->
         loop([caller | processes], values)
       {:value_put, key} ->
         loop(processes, [{String.to_atom(key), 1} | values])
+      error -> IO.puts :stderr, "Partition Error: #{error}"
     end
   end  
 
