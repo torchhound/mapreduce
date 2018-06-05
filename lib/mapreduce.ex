@@ -1,7 +1,6 @@
 defmodule MapReduce do
   require InputReader
   require Partition
-  require OutputWriter
 
   def main(args) do
     args |> parse_args |> pipeline
